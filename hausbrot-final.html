@@ -9,12 +9,7 @@
 :root{--cream:#F7F3EE;--warm:#EDE5D8;--brown:#3D2B1F;--brown-mid:#7A5C48;--brown-light:#B89880;--accent:#C4622D;--accent-light:#F0D5C4;--green:#4A6741;--green-light:#D6E4D4;--gold-light:#F5EDD5;--white:#FFFFFF;--border:rgba(61,43,31,0.12)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown);min-height:100vh}
-
-/* SCREENS */
-.screen{display:none}
-.screen.on{display:block}
-
-/* ── PUBLIC NEWSLETTER ── */
+.screen{display:none}.screen.on{display:block}
 #s-public{background:var(--cream)}
 .nl-wrap{max-width:640px;margin:0 auto}
 .nl-top{background:var(--brown);padding:48px 40px 36px;position:relative;overflow:hidden}
@@ -49,8 +44,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown)
 .hist-row:hover .hm{color:var(--accent)}
 .hm{font-size:15px;font-weight:500;transition:color .15s}
 .hc{font-size:12px;color:var(--brown-light)}
-
-/* ── LOGIN ── */
 #s-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--brown)}
 .lbox{background:var(--white);border-radius:20px;padding:48px 40px;width:360px;max-width:90vw}
 .llogo{font-family:'Playfair Display',serif;font-size:26px;color:var(--brown);margin-bottom:4px}
@@ -63,8 +56,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown)
 .lerr{color:var(--accent);font-size:13px;display:none;margin-bottom:10px}
 .lback{background:none;border:none;color:var(--brown-light);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:underline;display:block;text-align:center}
 .lback:hover{color:var(--brown)}
-
-/* ── EDITOR ── */
 #s-editor{background:var(--cream);min-height:100vh}
 .eh{background:var(--brown);color:var(--white);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
 .elogo{font-family:'Playfair Display',serif;font-size:20px}
@@ -104,8 +95,6 @@ textarea.ei{resize:vertical;line-height:1.6}
 .tab{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--brown-mid);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'DM Sans',sans-serif;transition:all .15s}
 .tab.on{color:var(--brown);border-bottom-color:var(--brown)}
 .tp{display:none}.tp.on{display:block}
-
-/* ── MODAL ── */
 .mover{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
 .mover.on{display:flex}
 .mbox{background:var(--white);border-radius:20px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto}
@@ -113,11 +102,8 @@ textarea.ei{resize:vertical;line-height:1.6}
 .mtitle{font-size:14px;font-weight:500}
 .mclose{background:none;border:none;font-size:22px;cursor:pointer;color:var(--brown-light);line-height:1}
 .mclose:hover{color:var(--brown)}
-
-/* TOAST */
 .toast{position:fixed;bottom:24px;right:24px;background:var(--brown);color:var(--white);padding:12px 20px;border-radius:12px;font-size:14px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
 .toast.on{opacity:1;transform:translateY(0)}
-
 @media(max-width:600px){
   .nl-top,.nl-body,.nl-foot,.hist-section{padding-left:20px;padding-right:20px}
   .ebody{padding:1rem}
@@ -128,9 +114,6 @@ textarea.ei{resize:vertical;line-height:1.6}
 </head>
 <body>
 
-<!-- ══════════════════════════════════════
-     PANTALLA 1: NEWSLETTER PÚBLICO
-══════════════════════════════════════ -->
 <div id="s-public" class="screen on">
   <div class="nl-wrap">
     <div class="nl-top">
@@ -154,9 +137,6 @@ textarea.ei{resize:vertical;line-height:1.6}
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PANTALLA 2: LOGIN
-══════════════════════════════════════ -->
 <div id="s-login" class="screen">
   <div class="lbox">
     <div class="llogo">Hausbrot</div>
@@ -169,9 +149,6 @@ textarea.ei{resize:vertical;line-height:1.6}
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PANTALLA 3: EDITOR
-══════════════════════════════════════ -->
 <div id="s-editor" class="screen">
   <div class="eh">
     <div style="display:flex;align-items:center">
@@ -190,8 +167,6 @@ textarea.ei{resize:vertical;line-height:1.6}
       <button class="tab" onclick="setTab('historial',this)">Historial</button>
       <button class="tab" onclick="setTab('config',this)">Configuración</button>
     </div>
-
-    <!-- TAB: CONTENIDO -->
     <div id="tp-contenido" class="tp on">
       <div style="background:#FFF8E7;border:1px solid #F0D580;border-radius:12px;padding:14px 16px;margin-bottom:1.25rem;font-size:13px;color:#7a6010;line-height:1.6">
         <strong>¿Cómo publicar?</strong> Editá el contenido, hacé click en <strong>"Generar y descargar"</strong> → se descarga un archivo HTML → subilo a GitHub reemplazando el anterior → todos los franquiciados ven los cambios automáticamente.
@@ -217,7 +192,6 @@ textarea.ei{resize:vertical;line-height:1.6}
           <textarea class="ei" id="cfg-intro" rows="2" placeholder="Ej: ¡Hola equipo! Estas son las novedades...">¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.</textarea>
         </div>
       </div>
-
       <div class="stitle">Noticias</div>
       <div id="nc"></div>
       <button class="addbtn" onclick="addItem()">+ Agregar noticia</button>
@@ -226,14 +200,10 @@ textarea.ei{resize:vertical;line-height:1.6}
         <button class="hbtn ha" onclick="publishNL()">Generar y descargar →</button>
       </div>
     </div>
-
-    <!-- TAB: HISTORIAL -->
     <div id="tp-historial" class="tp">
       <div class="stitle">Newsletters publicados</div>
       <div id="ed-hist"></div>
     </div>
-
-    <!-- TAB: CONFIG -->
     <div id="tp-config" class="tp">
       <div class="stitle">Cambiar contraseña</div>
       <div class="ecard">
@@ -243,9 +213,7 @@ textarea.ei{resize:vertical;line-height:1.6}
             <input class="ei" type="password" id="npw" placeholder="Nueva contraseña" style="flex:1">
             <button class="hbtn ha" onclick="changePw()">Guardar</button>
           </div>
-          <p style="font-size:12px;color:var(--brown-light);margin-top:8px">
-            La contraseña se guarda en este navegador. Si abrís desde otro dispositivo, usá la contraseña original: <strong>hausbrot2025</strong>
-          </p>
+          <p style="font-size:12px;color:var(--brown-light);margin-top:8px">La contraseña se guarda en este navegador. Si abrís desde otro dispositivo, usá la contraseña original: <strong>hausbrot2025</strong></p>
         </div>
       </div>
       <div style="margin-top:1.5rem">
@@ -255,7 +223,6 @@ textarea.ei{resize:vertical;line-height:1.6}
   </div>
 </div>
 
-<!-- MODAL PREVIEW / HIST ENTRY -->
 <div class="mover" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="mbox">
     <div class="mhead">
@@ -269,115 +236,51 @@ textarea.ei{resize:vertical;line-height:1.6}
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── CONTRASEÑA ───────────────────────────────────────────
-// Para cambiarla permanentemente, editá este valor:
 var DEFAULT_PW = 'hausbrot2025';
-// ─────────────────────────────────────────────────────────
-
 var EMOJIS = ['🔸','🛒','🇦🇷','🎉','📣','⭐','🥐','🍞','🌟','💡','📅','🔔','✅','🎁','🏪','📦','🔥','💬','🗓️','🎯'];
 var TIPOS  = {fecha:'Fecha especial',ops:'Operaciones',promo:'Promoción',redes:'Redes sociales',acciones:'Acciones',apertura:'Apertura'};
 var BCLS   = {fecha:'bf',ops:'bo',promo:'bp',redes:'br',acciones:'ba',apertura:'bap'};
 var cem    = {};
 
 var SAVED_HIST = [];
-var DEFAULTS = {"mes": "Mayo", "anio": 2025, "intro": "¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.", "news": [{"icon": "🛒", "tipo": "fecha", "titulo": "Día del Trabajador – 1° de mayo", "texto": "📅 El viernes 1 de mayo los locales permanecerán cerrados. Un momento para reconocer y agradecer el compromiso de cada persona que forma parte de Hausbrot 💛"}, {"icon": "🇦🇷", "tipo": "acciones", "titulo": "Hot Sale – del 11 al 13 de mayo", "texto": "💡 ¿De qué se trata? Durante el Hot Sale:
-👉 Todas las compras online incluyen un Ticket Dorado
-👉 Este ticket se canjea únicamente en sucursales
+var DEFAULTS = {"mes": "Mayo", "anio": 2025, "intro": "¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.", "news": [{"icon": "🛒", "tipo": "fecha", "titulo": "Día del Trabajador – 1° de mayo", "texto": "📅 El viernes 1 de mayo los locales permanecerán cerrados.\n\nUn momento para reconocer y agradecer el compromiso de cada persona que forma parte de Hausbrot 💛"}, {"icon": "🇦🇷", "tipo": "acciones", "titulo": "Hot Sale – del 11 al 13 de mayo", "texto": "💡 ¿De qué se trata? Durante el Hot Sale:\n👉 Todas las compras online incluyen un Ticket Dorado\n👉 Este ticket se canjea únicamente en sucursales\n\n📅 Vigencia\nDel 11 al 13 de mayo → compra online\nCanje válido hasta el domingo 24 de mayo\n\n🎁 Beneficios posibles del Ticket\n- 10% OFF en local\n- 15% OFF en local\n- 20% OFF en local\n\n⚠️ No acumulable con otras promociones\n\n📍 IMPORTANTE – CONTROL EN SUCURSALES\nCada vez que se use un Ticket Dorado enviar a planta:\n- Nombre\n- DNI\n- Mail\n- Número de ticket"}, {"icon": "📣", "tipo": "acciones", "titulo": "25 de mayo – Tradición Hausbrot", "texto": "Vamos a estar realizando una acción para traccionar más clientes a los locales.\n\nPróximamente les vamos a estar mandando un mail con los detalles de marketing y operativos."}, {"icon": "📅", "tipo": "apertura", "titulo": "Nueva apertura – Bella Vista 🚀", "texto": "📅 El lunes 4 de mayo abrimos una nueva sucursal en Bella Vista.\n\nLes deseamos muchísimo éxito en esta nueva etapa. Cada apertura es un paso más para seguir acercando nuestros alimentos verdaderos a más personas."}, {"icon": "⭐", "tipo": "promo", "titulo": "Pepas de Chocolate", "texto": "📅 Desde el jueves 7 de mayo vuelven a estar en stock las pepas de chocolate.\n\nProducto muy pedido → oportunidad para recomendar en mostrador.\n\n👉 Sugerencia: ofrecerlas activamente como opción dulce."}, {"icon": "🎯", "tipo": "redes", "titulo": "Redes sociales – Mayo", "texto": "Durante mayo vamos a poner el foco en generar contenido que aporte valor real a nuestra comunidad.\n\n👉 Contenido informativo y educativo:\n- Qué aportan nuestros productos\n- Qué los hace diferentes frente a otras marcas\n- Por qué elegir alimentos 100% integrales\n\n👉 Contenido más entretenido y cercano:\n- Que las personas se sientan identificadas\n- Que se reconozcan en situaciones cotidianas\n- Que conecten con la marca desde un lugar más humano\n\nEl objetivo es construir una comunicación más completa, que no solo muestre productos, sino que también acompañe hábitos y momentos del día."}], "_v": "mayo-2025-v1"};
 
-📅 Vigencia
-Del 11 al 13 de mayo → compra online
-Canje válido hasta el domingo 24 de mayo
-
-🎁 Beneficios posibles del Ticket
-- 10% OFF en local
-- 15% OFF en local
-- 20% OFF en local
-
-⚠️ No acumulable con otras promociones
-
-📍 IMPORTANTE – CONTROL EN SUCURSALES
-Cada vez que se use un Ticket Dorado enviar a planta:
-- Nombre
-- DNI
-- Mail
-- Número de ticket"}, {"icon": "📣", "tipo": "acciones", "titulo": "25 de mayo – Tradición Hausbrot", "texto": "Vamos a estar realizando una acción para traccionar más clientes a los locales. Próximamente les vamos a estar mandando un mail con los detalles de marketing y operativos."}, {"icon": "📅", "tipo": "apertura", "titulo": "Nueva apertura – Bella Vista 🚀", "texto": "📅 El lunes 4 de mayo abrimos una nueva sucursal en Bella Vista. Les deseamos muchísimo éxito en esta nueva etapa. Cada apertura es un paso más para seguir acercando nuestros alimentos verdaderos a más personas."}, {"icon": "⭐", "tipo": "promo", "titulo": "Pepas de Chocolate", "texto": "📅 Desde el jueves 7 de mayo vuelven a estar en stock las pepas de chocolate.
-
-Producto muy pedido → oportunidad para recomendar en mostrador
-
-👉 Sugerencia: ofrecerlas activamente como opción dulce"}, {"icon": "🎯", "tipo": "redes", "titulo": "Redes sociales – Mayo", "texto": "Durante mayo vamos a poner el foco en generar contenido que aporte valor real a nuestra comunidad.
-
-👉 Por un lado, vamos a trabajar contenido informativo y educativo, haciendo especial énfasis en:
-- Qué aportan nuestros productos
-- Qué los hace diferentes frente a otras marcas
-- Por qué elegir alimentos 100% integrales
-
-👉 Y por otro lado, vamos a sumar contenido más entretenido y cercano, buscando que las personas:
-- Se sientan identificadas
-- Se reconozcan en situaciones cotidianas
-- Conecten con la marca desde un lugar más humano
-
-El objetivo es empezar a construir una comunicación más completa, que no solo muestre productos, sino que también acompañe hábitos y momentos del día."}]};
-
-// ─── STORAGE ─────────────────────────────────────────────
 var MEM = {};
 function lsGet(k){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return MEM[k]||null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} MEM[k]=v; }
-function getPublished(){ return lsGet('hb_pub') || DEFAULTS; }
-function getHistory()  { return lsGet('hb_hist') || (typeof SAVED_HIST!=='undefined' ? SAVED_HIST : []); }
-function getPw()       { return lsGet('hb_pw')  || DEFAULT_PW; }
+function getPublished(){
+  var FILE_VERSION = 'mayo-2025-v1';
+  var saved = lsGet('hb_pub');
+  if(!saved || saved._v !== FILE_VERSION) return DEFAULTS;
+  return saved;
+}
+function getHistory(){ return lsGet('hb_hist') || (typeof SAVED_HIST!=='undefined' ? SAVED_HIST : []); }
+function getPw(){ return lsGet('hb_pw') || DEFAULT_PW; }
 
-// ─── SCREENS ─────────────────────────────────────────────
-function show(id){
-  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('on'); });
-  document.getElementById(id).classList.add('on');
-}
-
-function goPublic(){
-  renderPublic();
-  show('s-public');
-}
-function goLogin(){
-  document.getElementById('lpw').value='';
-  document.getElementById('lerr').style.display='none';
-  show('s-login');
-  setTimeout(function(){ document.getElementById('lpw').focus(); },100);
-}
-function goEditor(){
-  initEditor();
-  show('s-editor');
-}
+function show(id){ document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('on'); }); document.getElementById(id).classList.add('on'); }
+function goPublic(){ renderPublic(); show('s-public'); }
+function goLogin(){ document.getElementById('lpw').value=''; document.getElementById('lerr').style.display='none'; show('s-login'); setTimeout(function(){ document.getElementById('lpw').focus(); },100); }
+function goEditor(){ initEditor(); show('s-editor'); }
 function doLogout(){ goPublic(); }
 
-// ─── LOGIN ───────────────────────────────────────────────
 function doLogin(){
   var pw = document.getElementById('lpw').value;
-  if(pw === getPw()){
-    document.getElementById('lerr').style.display='none';
-    goEditor();
-  } else {
-    document.getElementById('lerr').style.display='block';
-    document.getElementById('lpw').value='';
-    document.getElementById('lpw').focus();
-  }
+  if(pw === getPw()){ document.getElementById('lerr').style.display='none'; goEditor(); }
+  else { document.getElementById('lerr').style.display='block'; document.getElementById('lpw').value=''; document.getElementById('lpw').focus(); }
 }
 function changePw(){
   var v = document.getElementById('npw').value.trim();
   if(!v || v.length < 4){ toast('Mínimo 4 caracteres'); return; }
-  lsSet('hb_pw', v);
-  document.getElementById('npw').value='';
-  toast('✓ Contraseña guardada en este navegador');
+  lsSet('hb_pw', v); document.getElementById('npw').value=''; toast('✓ Contraseña guardada en este navegador');
 }
 
-// ─── TABS ────────────────────────────────────────────────
 function setTab(name, btn){
   document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
   document.querySelectorAll('.tp').forEach(function(p){ p.classList.remove('on'); });
-  btn.classList.add('on');
-  document.getElementById('tp-'+name).classList.add('on');
+  btn.classList.add('on'); document.getElementById('tp-'+name).classList.add('on');
   if(name==='historial') renderEditorHist();
 }
 
-// ─── EDITOR INIT ─────────────────────────────────────────
 function initEditor(){
   var d = lsGet('hb_draft') || DEFAULTS;
   document.getElementById('cfg-mes').value  = d.mes  || 'Mayo';
@@ -389,51 +292,28 @@ function initEditor(){
 function getState(){
   var news=[];
   document.querySelectorAll('.ni').forEach(function(el,i){
-    news.push({
-      icon : cem[i] || '🔸',
-      tipo : el.querySelector('.tsel').value,
-      titulo: el.querySelector('.tinp').value,
-      texto : el.querySelector('.txinp').value
-    });
+    news.push({ icon:cem[i]||'🔸', tipo:el.querySelector('.tsel').value, titulo:el.querySelector('.tinp').value, texto:el.querySelector('.txinp').value });
   });
-  return {
-    mes  : document.getElementById('cfg-mes').value,
-    anio : parseInt(document.getElementById('cfg-anio').value)||2025,
-    intro: document.getElementById('cfg-intro').value,
-    news : news
-  };
+  return { mes:document.getElementById('cfg-mes').value, anio:parseInt(document.getElementById('cfg-anio').value)||2025, intro:document.getElementById('cfg-intro').value, news:news };
 }
 
-function renderItems(news){
-  document.getElementById('nc').innerHTML='';
-  cem={};
-  news.forEach(function(n,i){ addItem(n,i); });
-}
+function renderItems(news){ document.getElementById('nc').innerHTML=''; cem={}; news.forEach(function(n,i){ addItem(n,i); }); }
 
 function addItem(data, fi){
   var container = document.getElementById('nc');
   var idx = (fi!==undefined) ? fi : container.children.length;
-  var n   = data || {icon:'🔸',tipo:'general',titulo:'',texto:''};
+  var n = data || {icon:'🔸',tipo:'fecha',titulo:'',texto:''};
   cem[idx] = n.icon;
-
   var div = document.createElement('div');
   div.className='ni';
-
-  var picks = EMOJIS.map(function(e){
-    return '<div class="epo'+(n.icon===e?' on':'')+'" onclick="pick(this,\''+e+'\','+idx+')">'+e+'</div>';
-  }).join('');
-
+  var picks = EMOJIS.map(function(e){ return '<div class="epo'+(n.icon===e?' on':'')+'" onclick="pick(this,\''+e+'\','+idx+')">'+e+'</div>'; }).join('');
   div.setAttribute('draggable','true');
   div.addEventListener('dragstart', onDragStart);
   div.addEventListener('dragover',  onDragOver);
   div.addEventListener('drop',      onDrop);
   div.addEventListener('dragend',   onDragEnd);
-
   div.innerHTML =
-    '<div class="nih">'
-    +'<div style="display:flex;align-items:center;gap:8px">'
-    +'<div class="drag-handle" title="Arrastrá para reordenar">⠿</div>'
-    +'<span class="nin">NOTICIA '+(idx+1)+'</span></div>'
+    '<div class="nih"><div style="display:flex;align-items:center;gap:8px"><div class="drag-handle" title="Arrastrá para reordenar">⠿</div><span class="nin">NOTICIA '+(idx+1)+'</span></div>'
     +'<button class="ndel" onclick="this.closest(\'.ni\').remove();reindex()" title="Eliminar">×</button></div>'
     +'<div class="fr" style="margin-bottom:.75rem">'
     +'<div class="fd"><label class="fl">Título</label><input class="ei tinp" type="text" value="'+esc(n.titulo)+'" placeholder="Ej: Hot Sale..."></div>'
@@ -447,105 +327,54 @@ function addItem(data, fi){
     +'</select></div></div>'
     +'<div class="fd"><label class="fl">Texto</label><textarea class="ei txinp" rows="4" placeholder="Describí la novedad...">'+esc(n.texto)+'</textarea></div>'
     +'<div class="fd"><label class="fl">Ícono</label><div class="epick">'+picks+'</div></div>';
-
   container.appendChild(div);
 }
 
-function pick(el,emoji,idx){
-  el.closest('.epick').querySelectorAll('.epo').forEach(function(e){ e.classList.remove('on'); });
-  el.classList.add('on');
-  cem[idx]=emoji;
-}
+function pick(el,emoji,idx){ el.closest('.epick').querySelectorAll('.epo').forEach(function(e){ e.classList.remove('on'); }); el.classList.add('on'); cem[idx]=emoji; }
+function reindex(){ document.querySelectorAll('.ni .nin').forEach(function(el,i){ el.textContent='NOTICIA '+(i+1); }); }
 
-function reindex(){
-  document.querySelectorAll('.ni .nin').forEach(function(el,i){ el.textContent='NOTICIA '+(i+1); });
-}
-
-// ─── DRAG & DROP ─────────────────────────────────────────
 var dragSrc = null;
+function onDragStart(e){ dragSrc=this; this.classList.add('dragging'); e.dataTransfer.effectAllowed='move'; }
+function onDragOver(e){ e.preventDefault(); e.dataTransfer.dropEffect='move'; document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); }); if(this!==dragSrc) this.classList.add('drag-over'); }
+function onDrop(e){ e.preventDefault(); if(this===dragSrc) return; var container=document.getElementById('nc'); var items=Array.from(container.querySelectorAll('.ni')); var si=items.indexOf(dragSrc); var di=items.indexOf(this); if(si<di) container.insertBefore(dragSrc,this.nextSibling); else container.insertBefore(dragSrc,this); document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); }); reindex(); }
+function onDragEnd(){ this.classList.remove('dragging'); document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); }); }
 
-function onDragStart(e){
-  dragSrc = this;
-  this.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-}
-function onDragOver(e){
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); });
-  if(this !== dragSrc) this.classList.add('drag-over');
-}
-function onDrop(e){
-  e.preventDefault();
-  if(this === dragSrc) return;
-  var container = document.getElementById('nc');
-  var items = Array.from(container.querySelectorAll('.ni'));
-  var srcIdx  = items.indexOf(dragSrc);
-  var destIdx = items.indexOf(this);
-  if(srcIdx < destIdx) container.insertBefore(dragSrc, this.nextSibling);
-  else                 container.insertBefore(dragSrc, this);
-  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); });
-  reindex();
-}
-function onDragEnd(){
-  this.classList.remove('dragging');
-  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); });
-}
-
-// ─── PUBLISH ─────────────────────────────────────────────
 function publishNL(){
   var state = getState();
   lsSet('hb_draft', state);
-  lsSet('hb_pub', state);
-
+  state._v = 'mayo-2025-v1'; lsSet('hb_pub', state);
   var hist = getHistory();
-  var key  = state.mes+' '+state.anio;
-  var idx  = hist.findIndex(function(h){ return h.key===key; });
-  var entry= Object.assign({key:key, at:new Date().toISOString()}, state);
+  var key = state.mes+' '+state.anio;
+  var idx = hist.findIndex(function(h){ return h.key===key; });
+  var entry = Object.assign({key:key, at:new Date().toISOString()}, state);
   if(idx>=0) hist[idx]=entry; else hist.unshift(entry);
   lsSet('hb_hist', hist);
-
-  // Generate new HTML with content baked in
   generateAndDownload(state, hist);
 }
 
 function generateAndDownload(state, hist){
-  // Get the current page HTML
   var src = document.documentElement.outerHTML;
-
-  // Replace the DEFAULTS object with current content
+  var ver = state.mes.toLowerCase().replace(/\s/g,'-')+'-'+state.anio+'-v1';
   var newDefaults = 'var DEFAULTS = ' + JSON.stringify(state) + ';';
   src = src.replace(/var DEFAULTS = \{[\s\S]*?\};/, newDefaults);
-
-  // Replace the history too
   var newHist = 'var SAVED_HIST = ' + JSON.stringify(hist) + ';';
-  // Insert after DEFAULTS if not present, or replace
-  if(src.indexOf('var SAVED_HIST =') >= 0){
-    src = src.replace(/var SAVED_HIST = \[[\s\S]*?\];/, newHist);
-  } else {
-    src = src.replace('var DEFAULTS = ' + JSON.stringify(state) + ';',
-      'var DEFAULTS = ' + JSON.stringify(state) + ';
-' + newHist);
-  }
-
-  // Download
+  src = src.replace(/var SAVED_HIST = \[[\s\S]*?\];/, newHist);
+  src = src.replace(/var FILE_VERSION = '[^']*';/g, "var FILE_VERSION = '"+ver+"';");
+  src = src.replace(/state\._v = '[^']*';/g, "state._v = '"+ver+"';");
   var blob = new Blob([src], {type:'text/html'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'hausbrot-final.html';
   a.click();
   URL.revokeObjectURL(a.href);
-
-  toast('✓ Archivo generado — subilo a GitHub para publicar');
+  toast('✓ Archivo descargado — subilo a GitHub');
   renderPublic();
 }
 
-// ─── RENDER PUBLIC ───────────────────────────────────────
 function renderPublic(){
   var d = getPublished();
   document.getElementById('pub-mes').textContent = d.mes+' '+d.anio;
   document.getElementById('pub-intro').textContent = d.intro||'';
-
   var items = (d.news||[]).map(function(n){
     var bc=BCLS[n.tipo]||'bg', bl=TIPOS[n.tipo]||'General';
     return '<div class="nl-item"><div class="nl-icon">'+(n.icon||'🔸')+'</div>'
@@ -554,31 +383,19 @@ function renderPublic(){
       +'<div class="nl-itext">'+(n.texto||'').replace(/\n/g,'<br>')+'</div></div></div>';
   }).join('');
   document.getElementById('pub-items').innerHTML = items;
-
-  // historial en public
   var hist = getHistory().filter(function(h){ return h.key!==(d.mes+' '+d.anio); });
-  var hs   = document.getElementById('pub-hist');
-  var hl   = document.getElementById('pub-hist-list');
+  var hs = document.getElementById('pub-hist');
+  var hl = document.getElementById('pub-hist-list');
   if(hist.length){
     hs.style.display='block';
-    hl.innerHTML = hist.map(function(h){
-      return '<div class="hist-row" onclick=\'showHistEntry('+JSON.stringify(h)+')\''
-        +'><span class="hm">'+h.mes+' '+h.anio+'</span>'
-        +'<span class="hc">'+(h.news||[]).length+' noticias →</span></div>';
-    }).join('');
-  } else {
-    hs.style.display='none';
-  }
+    hl.innerHTML = hist.map(function(h){ return '<div class="hist-row" onclick=\'showHistEntry('+JSON.stringify(h)+')\' ><span class="hm">'+h.mes+' '+h.anio+'</span><span class="hc">'+(h.news||[]).length+' noticias →</span></div>'; }).join('');
+  } else { hs.style.display='none'; }
 }
 
-// ─── RENDER EDITOR HIST ──────────────────────────────────
 function renderEditorHist(){
   var hist = getHistory();
-  var c    = document.getElementById('ed-hist');
-  if(!hist.length){
-    c.innerHTML='<p style="color:var(--brown-light);font-size:14px;padding:24px 0">Todavía no publicaste ningún newsletter.</p>';
-    return;
-  }
+  var c = document.getElementById('ed-hist');
+  if(!hist.length){ c.innerHTML='<p style="color:var(--brown-light);font-size:14px;padding:24px 0">Todavía no publicaste ningún newsletter.</p>'; return; }
   c.innerHTML = hist.map(function(h){
     return '<div class="ni" style="display:flex;align-items:center;justify-content:space-between;cursor:default">'
       +'<div><div style="font-family:Playfair Display,serif;font-size:17px;color:var(--brown);margin-bottom:6px">'+h.mes+' '+h.anio+'</div>'
@@ -587,52 +404,25 @@ function renderEditorHist(){
   }).join('');
 }
 
-// ─── PREVIEW & MODAL ─────────────────────────────────────
-function openPreview(){
-  var state = getState();
-  document.getElementById('modal-title').textContent = 'Vista previa — '+state.mes+' '+state.anio;
-  document.getElementById('modal-body').innerHTML = buildNLInner(state);
-  document.getElementById('modal').classList.add('on');
-}
-
-function showHistEntry(h){
-  document.getElementById('modal-title').textContent = h.mes+' '+h.anio;
-  document.getElementById('modal-body').innerHTML = buildNLInner(h);
-  document.getElementById('modal').classList.add('on');
-}
-
-function closeModal(){
-  document.getElementById('modal').classList.remove('on');
-}
+function openPreview(){ var state=getState(); document.getElementById('modal-title').textContent='Vista previa — '+state.mes+' '+state.anio; document.getElementById('modal-body').innerHTML=buildNLInner(state); document.getElementById('modal').classList.add('on'); }
+function showHistEntry(h){ document.getElementById('modal-title').textContent=h.mes+' '+h.anio; document.getElementById('modal-body').innerHTML=buildNLInner(h); document.getElementById('modal').classList.add('on'); }
+function closeModal(){ document.getElementById('modal').classList.remove('on'); }
 
 function buildNLInner(d){
   var items=(d.news||[]).map(function(n){
     var bc=BCLS[n.tipo]||'bg', bl=TIPOS[n.tipo]||'General';
-    return '<div class="nl-item" style="padding:18px 24px">'
-      +'<div class="nl-icon">'+(n.icon||'🔸')+'</div>'
-      +'<div><span class="nl-badge '+bc+'">'+bl+'</span>'
-      +'<div class="nl-ititle">'+esc(n.titulo)+'</div>'
+    return '<div class="nl-item" style="padding:18px 24px"><div class="nl-icon">'+(n.icon||'🔸')+'</div>'
+      +'<div><span class="nl-badge '+bc+'">'+bl+'</span><div class="nl-ititle">'+esc(n.titulo)+'</div>'
       +'<div class="nl-itext">'+(n.texto||'').replace(/\n/g,'<br>')+'</div></div></div>';
   }).join('');
-  return '<div class="nl-top" style="border-radius:0">'
-    +'<div class="nl-logo">Hausbrot</div>'
-    +'<div class="nl-sub">Newsletter para franquiciados</div>'
-    +'<span class="nl-pill">'+d.mes+' '+d.anio+'</span></div>'
+  return '<div class="nl-top" style="border-radius:0"><div class="nl-logo">Hausbrot</div><div class="nl-sub">Newsletter para franquiciados</div><span class="nl-pill">'+d.mes+' '+d.anio+'</span></div>'
     +'<div style="padding:24px 24px 0"><p class="nl-intro">'+esc(d.intro)+'</p>'+items+'</div>'
-    +'<div class="nl-foot" style="border-radius:0"><div class="nl-flogo">Hausbrot</div>'
-    +'<div class="nl-ftext">Newsletter interno · Solo para franquiciados</div></div>';
+    +'<div class="nl-foot" style="border-radius:0"><div class="nl-flogo">Hausbrot</div><div class="nl-ftext">Newsletter interno · Solo para franquiciados</div></div>';
 }
 
-// ─── UTILS ───────────────────────────────────────────────
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on'); setTimeout(function(){ t.classList.remove('on'); },3500); }
 
-function toast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('on');
-  setTimeout(function(){ t.classList.remove('on'); },3500);
-}
-
-// ─── BOOT ────────────────────────────────────────────────
 renderPublic();
 </script>
 </body>
