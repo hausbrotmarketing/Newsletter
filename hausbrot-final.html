@@ -34,6 +34,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown)
 .bf{background:var(--gold-light);color:#8a5f10}
 .bo{background:var(--green-light);color:var(--green)}
 .bg{background:var(--warm);color:var(--brown-mid)}
+.br{background:#EAE4F5;color:#4a3580}
+.ba{background:#FDE8E8;color:#9b2c2c}
+.bap{background:#E3F0FB;color:#1a5e8a}
 .nl-foot{background:var(--warm);padding:28px 40px;text-align:center}
 .nl-flogo{font-family:'Playfair Display',serif;font-size:22px;color:var(--brown-mid);margin-bottom:6px}
 .nl-ftext{font-size:12px;color:var(--brown-light);line-height:1.7;margin-bottom:16px}
@@ -87,6 +90,11 @@ textarea.ei{resize:vertical;line-height:1.6}
 .nin{font-size:11px;font-weight:500;color:var(--brown-light);letter-spacing:.08em}
 .ndel{background:none;border:none;cursor:pointer;color:var(--brown-light);font-size:20px;padding:2px 6px;border-radius:6px;line-height:1;transition:all .15s}
 .ndel:hover{background:#fee;color:#c44}
+.drag-handle{cursor:grab;color:var(--brown-light);font-size:16px;padding:4px 6px;display:flex;align-items:center;gap:4px;user-select:none;border-radius:6px;transition:all .15s}
+.drag-handle:hover{color:var(--brown);background:var(--warm)}
+.drag-handle:active{cursor:grabbing}
+.ni.dragging{opacity:.4;border:2px dashed var(--accent)}
+.ni.drag-over{border-top:3px solid var(--accent)}
 .addbtn{width:100%;padding:12px;border:1.5px dashed var(--border);border-radius:12px;background:none;color:var(--brown-mid);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;margin-bottom:1.25rem}
 .addbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
 .epick{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
@@ -264,8 +272,8 @@ var DEFAULT_PW = 'hausbrot2025';
 // ─────────────────────────────────────────────────────────
 
 var EMOJIS = ['🔸','🛒','🇦🇷','🎉','📣','⭐','🥐','🍞','🌟','💡','📅','🔔','✅','🎁','🏪','📦','🔥','💬','🗓️','🎯'];
-var TIPOS  = {promo:'Promoción',fecha:'Fecha especial',ops:'Operaciones',general:'General'};
-var BCLS   = {promo:'bp',fecha:'bf',ops:'bo',general:'bg'};
+var TIPOS  = {fecha:'Fecha especial',ops:'Operaciones',promo:'Promoción',redes:'Redes sociales',acciones:'Acciones',apertura:'Apertura'};
+var BCLS   = {fecha:'bf',ops:'bo',promo:'bp',redes:'br',acciones:'ba',apertura:'bap'};
 var cem    = {};
 
 var DEFAULTS = {
@@ -382,16 +390,27 @@ function addItem(data, fi){
     return '<div class="epo'+(n.icon===e?' on':'')+'" onclick="pick(this,\''+e+'\','+idx+')">'+e+'</div>';
   }).join('');
 
+  div.setAttribute('draggable','true');
+  div.addEventListener('dragstart', onDragStart);
+  div.addEventListener('dragover',  onDragOver);
+  div.addEventListener('drop',      onDrop);
+  div.addEventListener('dragend',   onDragEnd);
+
   div.innerHTML =
-    '<div class="nih"><span class="nin">NOTICIA '+(idx+1)+'</span>'
+    '<div class="nih">'
+    +'<div style="display:flex;align-items:center;gap:8px">'
+    +'<div class="drag-handle" title="Arrastrá para reordenar">⠿</div>'
+    +'<span class="nin">NOTICIA '+(idx+1)+'</span></div>'
     +'<button class="ndel" onclick="this.closest(\'.ni\').remove();reindex()" title="Eliminar">×</button></div>'
     +'<div class="fr" style="margin-bottom:.75rem">'
     +'<div class="fd"><label class="fl">Título</label><input class="ei tinp" type="text" value="'+esc(n.titulo)+'" placeholder="Ej: Hot Sale..."></div>'
     +'<div class="fd"><label class="fl">Tipo</label><select class="ei tsel">'
-    +'<option value="promo"'+(n.tipo==='promo'?' selected':'')+'>Promoción</option>'
     +'<option value="fecha"'+(n.tipo==='fecha'?' selected':'')+'>Fecha especial</option>'
     +'<option value="ops"'+(n.tipo==='ops'?' selected':'')+'>Operaciones</option>'
-    +'<option value="general"'+(n.tipo==='general'?' selected':'')+'>General</option>'
+    +'<option value="promo"'+(n.tipo==='promo'?' selected':'')+'>Promoción</option>'
+    +'<option value="redes"'+(n.tipo==='redes'?' selected':'')+'>Redes sociales</option>'
+    +'<option value="acciones"'+(n.tipo==='acciones'?' selected':'')+'>Acciones</option>'
+    +'<option value="apertura"'+(n.tipo==='apertura'?' selected':'')+'>Apertura</option>'
     +'</select></div></div>'
     +'<div class="fd"><label class="fl">Texto</label><textarea class="ei txinp" rows="4" placeholder="Describí la novedad...">'+esc(n.texto)+'</textarea></div>'
     +'<div class="fd"><label class="fl">Ícono</label><div class="epick">'+picks+'</div></div>';
@@ -407,6 +426,37 @@ function pick(el,emoji,idx){
 
 function reindex(){
   document.querySelectorAll('.ni .nin').forEach(function(el,i){ el.textContent='NOTICIA '+(i+1); });
+}
+
+// ─── DRAG & DROP ─────────────────────────────────────────
+var dragSrc = null;
+
+function onDragStart(e){
+  dragSrc = this;
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onDragOver(e){
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); });
+  if(this !== dragSrc) this.classList.add('drag-over');
+}
+function onDrop(e){
+  e.preventDefault();
+  if(this === dragSrc) return;
+  var container = document.getElementById('nc');
+  var items = Array.from(container.querySelectorAll('.ni'));
+  var srcIdx  = items.indexOf(dragSrc);
+  var destIdx = items.indexOf(this);
+  if(srcIdx < destIdx) container.insertBefore(dragSrc, this.nextSibling);
+  else                 container.insertBefore(dragSrc, this);
+  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); });
+  reindex();
+}
+function onDragEnd(){
+  this.classList.remove('dragging');
+  document.querySelectorAll('.ni').forEach(function(el){ el.classList.remove('drag-over'); });
 }
 
 // ─── PUBLISH ─────────────────────────────────────────────
