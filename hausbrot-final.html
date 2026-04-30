@@ -181,7 +181,7 @@ textarea.ei{resize:vertical;line-height:1.6}
     <div style="display:flex;gap:8px">
       <button class="hbtn hg" onclick="goPublic()">Ver newsletter</button>
       <button class="hbtn hg" onclick="openPreview()">Vista previa</button>
-      <button class="hbtn ha" onclick="publishNL()">Publicar →</button>
+      <button class="hbtn ha" onclick="publishNL()">Generar y descargar →</button>
     </div>
   </div>
   <div class="ebody">
@@ -193,6 +193,9 @@ textarea.ei{resize:vertical;line-height:1.6}
 
     <!-- TAB: CONTENIDO -->
     <div id="tp-contenido" class="tp on">
+      <div style="background:#FFF8E7;border:1px solid #F0D580;border-radius:12px;padding:14px 16px;margin-bottom:1.25rem;font-size:13px;color:#7a6010;line-height:1.6">
+        <strong>¿Cómo publicar?</strong> Editá el contenido, hacé click en <strong>"Generar y descargar"</strong> → se descarga un archivo HTML → subilo a GitHub reemplazando el anterior → todos los franquiciados ven los cambios automáticamente.
+      </div>
       <div class="stitle">Mes del newsletter</div>
       <div class="ecard">
         <div class="fr">
@@ -220,7 +223,7 @@ textarea.ei{resize:vertical;line-height:1.6}
       <button class="addbtn" onclick="addItem()">+ Agregar noticia</button>
       <div style="display:flex;gap:10px;justify-content:flex-end">
         <button class="hbtn hp" onclick="openPreview()">Vista previa</button>
-        <button class="hbtn ha" onclick="publishNL()">Publicar →</button>
+        <button class="hbtn ha" onclick="publishNL()">Generar y descargar →</button>
       </div>
     </div>
 
@@ -276,21 +279,51 @@ var TIPOS  = {fecha:'Fecha especial',ops:'Operaciones',promo:'Promoción',redes:
 var BCLS   = {fecha:'bf',ops:'bo',promo:'bp',redes:'br',acciones:'ba',apertura:'bap'};
 var cem    = {};
 
-var DEFAULTS = {
-  mes:'Mayo', anio:2025,
-  intro:'¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.',
-  news:[
-    {icon:'🛒',tipo:'promo',titulo:'Hot Sale – del 11 al 13 de mayo',texto:'Durante estos días estaremos participando del Hot Sale con acciones especiales a través de cupones de descuento.\n\nMás cerca de la fecha estaremos compartiendo el detalle de la implementación para cada sucursal.'},
-    {icon:'🇦🇷',tipo:'fecha',titulo:'25 de mayo – Tradición Hausbrot',texto:'Como todos los años, para esta fecha especial tendremos disponibles nuestros clásicos:\n\n• Pastelitos integrales y horneados (de membrillo y batata)\n\nUna propuesta que ya es parte de nuestra identidad y que acompaña a nuestros clientes en momentos de encuentro y tradición.'}
-  ]
-};
+var SAVED_HIST = [];
+var DEFAULTS = {"mes": "Mayo", "anio": 2025, "intro": "¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.", "news": [{"icon": "🛒", "tipo": "fecha", "titulo": "Día del Trabajador – 1° de mayo", "texto": "📅 El viernes 1 de mayo los locales permanecerán cerrados. Un momento para reconocer y agradecer el compromiso de cada persona que forma parte de Hausbrot 💛"}, {"icon": "🇦🇷", "tipo": "acciones", "titulo": "Hot Sale – del 11 al 13 de mayo", "texto": "💡 ¿De qué se trata? Durante el Hot Sale:
+👉 Todas las compras online incluyen un Ticket Dorado
+👉 Este ticket se canjea únicamente en sucursales
+
+📅 Vigencia
+Del 11 al 13 de mayo → compra online
+Canje válido hasta el domingo 24 de mayo
+
+🎁 Beneficios posibles del Ticket
+- 10% OFF en local
+- 15% OFF en local
+- 20% OFF en local
+
+⚠️ No acumulable con otras promociones
+
+📍 IMPORTANTE – CONTROL EN SUCURSALES
+Cada vez que se use un Ticket Dorado enviar a planta:
+- Nombre
+- DNI
+- Mail
+- Número de ticket"}, {"icon": "📣", "tipo": "acciones", "titulo": "25 de mayo – Tradición Hausbrot", "texto": "Vamos a estar realizando una acción para traccionar más clientes a los locales. Próximamente les vamos a estar mandando un mail con los detalles de marketing y operativos."}, {"icon": "📅", "tipo": "apertura", "titulo": "Nueva apertura – Bella Vista 🚀", "texto": "📅 El lunes 4 de mayo abrimos una nueva sucursal en Bella Vista. Les deseamos muchísimo éxito en esta nueva etapa. Cada apertura es un paso más para seguir acercando nuestros alimentos verdaderos a más personas."}, {"icon": "⭐", "tipo": "promo", "titulo": "Pepas de Chocolate", "texto": "📅 Desde el jueves 7 de mayo vuelven a estar en stock las pepas de chocolate.
+
+Producto muy pedido → oportunidad para recomendar en mostrador
+
+👉 Sugerencia: ofrecerlas activamente como opción dulce"}, {"icon": "🎯", "tipo": "redes", "titulo": "Redes sociales – Mayo", "texto": "Durante mayo vamos a poner el foco en generar contenido que aporte valor real a nuestra comunidad.
+
+👉 Por un lado, vamos a trabajar contenido informativo y educativo, haciendo especial énfasis en:
+- Qué aportan nuestros productos
+- Qué los hace diferentes frente a otras marcas
+- Por qué elegir alimentos 100% integrales
+
+👉 Y por otro lado, vamos a sumar contenido más entretenido y cercano, buscando que las personas:
+- Se sientan identificadas
+- Se reconozcan en situaciones cotidianas
+- Conecten con la marca desde un lugar más humano
+
+El objetivo es empezar a construir una comunicación más completa, que no solo muestre productos, sino que también acompañe hábitos y momentos del día."}]};
 
 // ─── STORAGE ─────────────────────────────────────────────
 var MEM = {};
 function lsGet(k){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return MEM[k]||null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} MEM[k]=v; }
 function getPublished(){ return lsGet('hb_pub') || DEFAULTS; }
-function getHistory()  { return lsGet('hb_hist') || []; }
+function getHistory()  { return lsGet('hb_hist') || (typeof SAVED_HIST!=='undefined' ? SAVED_HIST : []); }
 function getPw()       { return lsGet('hb_pw')  || DEFAULT_PW; }
 
 // ─── SCREENS ─────────────────────────────────────────────
@@ -472,7 +505,38 @@ function publishNL(){
   if(idx>=0) hist[idx]=entry; else hist.unshift(entry);
   lsSet('hb_hist', hist);
 
-  toast('✓ Newsletter de '+state.mes+' '+state.anio+' publicado');
+  // Generate new HTML with content baked in
+  generateAndDownload(state, hist);
+}
+
+function generateAndDownload(state, hist){
+  // Get the current page HTML
+  var src = document.documentElement.outerHTML;
+
+  // Replace the DEFAULTS object with current content
+  var newDefaults = 'var DEFAULTS = ' + JSON.stringify(state) + ';';
+  src = src.replace(/var DEFAULTS = \{[\s\S]*?\};/, newDefaults);
+
+  // Replace the history too
+  var newHist = 'var SAVED_HIST = ' + JSON.stringify(hist) + ';';
+  // Insert after DEFAULTS if not present, or replace
+  if(src.indexOf('var SAVED_HIST =') >= 0){
+    src = src.replace(/var SAVED_HIST = \[[\s\S]*?\];/, newHist);
+  } else {
+    src = src.replace('var DEFAULTS = ' + JSON.stringify(state) + ';',
+      'var DEFAULTS = ' + JSON.stringify(state) + ';
+' + newHist);
+  }
+
+  // Download
+  var blob = new Blob([src], {type:'text/html'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'hausbrot-final.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  toast('✓ Archivo generado — subilo a GitHub para publicar');
   renderPublic();
 }
 
