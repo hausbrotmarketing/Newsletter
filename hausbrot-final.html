@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hausbrot · Newsletter</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F7F3EE;--warm:#EDE5D8;--brown:#3D2B1F;--brown-mid:#7A5C48;--brown-light:#B89880;--accent:#C4622D;--accent-light:#F0D5C4;--green:#4A6741;--green-light:#D6E4D4;--gold-light:#F5EDD5;--white:#FFFFFF;--border:rgba(61,43,31,0.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown);min-height:100vh}
+
+/* SCREENS */
+.screen{display:none}
+.screen.on{display:block}
+
+/* ── PUBLIC NEWSLETTER ── */
+#s-public{background:var(--cream)}
+.nl-wrap{max-width:640px;margin:0 auto}
+.nl-top{background:var(--brown);padding:48px 40px 36px;position:relative;overflow:hidden}
+.nl-top::after{content:'';position:absolute;bottom:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(196,98,45,.18);pointer-events:none}
+.nl-logo{font-family:'Playfair Display',serif;font-size:38px;color:var(--white);margin-bottom:4px;position:relative;z-index:1}
+.nl-sub{font-size:13px;color:rgba(255,255,255,.45);margin-bottom:22px;position:relative;z-index:1}
+.nl-pill{display:inline-block;background:var(--accent);color:var(--white);padding:6px 16px;border-radius:999px;font-size:13px;font-weight:500;position:relative;z-index:1}
+.nl-body{padding:32px 40px;background:var(--white)}
+.nl-intro{font-size:15px;line-height:1.7;color:var(--brown-mid);margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.nl-item{display:flex;gap:16px;padding:22px 0;border-bottom:1px solid var(--border)}
+.nl-item:last-child{border-bottom:none}
+.nl-icon{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:var(--warm)}
+.nl-ititle{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--brown);margin-bottom:8px;line-height:1.3}
+.nl-itext{font-size:14px;line-height:1.75;color:var(--brown-mid)}
+.nl-badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500;margin-bottom:8px}
+.bp{background:var(--accent-light);color:var(--accent)}
+.bf{background:var(--gold-light);color:#8a5f10}
+.bo{background:var(--green-light);color:var(--green)}
+.bg{background:var(--warm);color:var(--brown-mid)}
+.nl-foot{background:var(--warm);padding:28px 40px;text-align:center}
+.nl-flogo{font-family:'Playfair Display',serif;font-size:22px;color:var(--brown-mid);margin-bottom:6px}
+.nl-ftext{font-size:12px;color:var(--brown-light);line-height:1.7;margin-bottom:16px}
+.nl-edit-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:7px 16px;font-size:12px;color:var(--brown-light);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.nl-edit-btn:hover{border-color:var(--brown-mid);color:var(--brown)}
+.hist-section{padding:28px 40px;background:var(--white);border-top:1px solid var(--border)}
+.hist-label{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--brown-light);text-transform:uppercase;margin-bottom:14px}
+.hist-row{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.hist-row:last-child{border-bottom:none}
+.hist-row:hover .hm{color:var(--accent)}
+.hm{font-size:15px;font-weight:500;transition:color .15s}
+.hc{font-size:12px;color:var(--brown-light)}
+
+/* ── LOGIN ── */
+#s-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--brown)}
+.lbox{background:var(--white);border-radius:20px;padding:48px 40px;width:360px;max-width:90vw}
+.llogo{font-family:'Playfair Display',serif;font-size:26px;color:var(--brown);margin-bottom:4px}
+.lsub{font-size:13px;color:var(--brown-light);margin-bottom:32px}
+.llabel{font-size:12px;font-weight:500;letter-spacing:.08em;color:var(--brown-mid);margin-bottom:6px;display:block}
+.linput{width:100%;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown);margin-bottom:16px;transition:border-color .2s}
+.linput:focus{outline:none;border-color:var(--accent)}
+.lbtn{width:100%;padding:13px;background:var(--brown);color:var(--white);border:none;border-radius:10px;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s;margin-bottom:12px}
+.lbtn:hover{background:var(--accent)}
+.lerr{color:var(--accent);font-size:13px;display:none;margin-bottom:10px}
+.lback{background:none;border:none;color:var(--brown-light);font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:underline;display:block;text-align:center}
+.lback:hover{color:var(--brown)}
+
+/* ── EDITOR ── */
+#s-editor{background:var(--cream);min-height:100vh}
+.eh{background:var(--brown);color:var(--white);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.elogo{font-family:'Playfair Display',serif;font-size:20px}
+.emeta{font-size:12px;color:rgba(255,255,255,.4);margin-left:8px}
+.hbtn{padding:7px 16px;font-size:13px;font-weight:500;border-radius:8px;border:1.5px solid transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.hg{background:rgba(255,255,255,.1);color:var(--white);border-color:rgba(255,255,255,.2)}
+.hg:hover{background:rgba(255,255,255,.2)}
+.ha{background:var(--accent);color:var(--white)}
+.ha:hover{background:#b0521f}
+.hp{background:var(--white);color:var(--brown);border-color:var(--border)}
+.hp:hover{border-color:var(--accent);color:var(--accent)}
+.ebody{max-width:820px;margin:0 auto;padding:2rem 1.5rem}
+.stitle{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--brown-light);margin-bottom:12px;text-transform:uppercase}
+.ecard{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:1.5rem;margin-bottom:1.25rem}
+.fl{font-size:12px;font-weight:500;color:var(--brown-mid);margin-bottom:6px;display:block;letter-spacing:.04em}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fd{margin-bottom:12px}
+.ei{width:100%;padding:9px 13px;border:1px solid var(--border);border-radius:9px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--brown);transition:border-color .15s}
+.ei:focus{outline:none;border-color:var(--accent);background:var(--white)}
+textarea.ei{resize:vertical;line-height:1.6}
+.ni{background:var(--cream);border-radius:12px;border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:.75rem}
+.nih{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.nin{font-size:11px;font-weight:500;color:var(--brown-light);letter-spacing:.08em}
+.ndel{background:none;border:none;cursor:pointer;color:var(--brown-light);font-size:20px;padding:2px 6px;border-radius:6px;line-height:1;transition:all .15s}
+.ndel:hover{background:#fee;color:#c44}
+.addbtn{width:100%;padding:12px;border:1.5px dashed var(--border);border-radius:12px;background:none;color:var(--brown-mid);font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;margin-bottom:1.25rem}
+.addbtn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light)}
+.epick{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.epo{width:34px;height:34px;border:1px solid var(--border);border-radius:8px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--white);transition:all .15s}
+.epo:hover,.epo.on{border-color:var(--accent);background:var(--accent-light)}
+.tabs{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:1px solid var(--border)}
+.tab{padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--brown-mid);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:'DM Sans',sans-serif;transition:all .15s}
+.tab.on{color:var(--brown);border-bottom-color:var(--brown)}
+.tp{display:none}.tp.on{display:block}
+
+/* ── MODAL ── */
+.mover{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.mover.on{display:flex}
+.mbox{background:var(--white);border-radius:20px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto}
+.mhead{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:1}
+.mtitle{font-size:14px;font-weight:500}
+.mclose{background:none;border:none;font-size:22px;cursor:pointer;color:var(--brown-light);line-height:1}
+.mclose:hover{color:var(--brown)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--brown);color:var(--white);padding:12px 20px;border-radius:12px;font-size:14px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.toast.on{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  .nl-top,.nl-body,.nl-foot,.hist-section{padding-left:20px;padding-right:20px}
+  .ebody{padding:1rem}
+  .fr{grid-template-columns:1fr}
+  .lbox{padding:32px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     PANTALLA 1: NEWSLETTER PÚBLICO
+══════════════════════════════════════ -->
+<div id="s-public" class="screen on">
+  <div class="nl-wrap">
+    <div class="nl-top">
+      <div class="nl-logo">Hausbrot</div>
+      <div class="nl-sub">Newsletter para franquiciados</div>
+      <span class="nl-pill" id="pub-mes">Mayo 2025</span>
+    </div>
+    <div class="nl-body">
+      <p class="nl-intro" id="pub-intro"></p>
+      <div id="pub-items"></div>
+    </div>
+    <div id="pub-hist" class="hist-section" style="display:none">
+      <div class="hist-label">Newsletters anteriores</div>
+      <div id="pub-hist-list"></div>
+    </div>
+    <div class="nl-foot">
+      <div class="nl-flogo">Hausbrot</div>
+      <div class="nl-ftext">Newsletter interno · Solo para uso de franquiciados<br>Ante consultas, contactarse con casa central.</div>
+      <button class="nl-edit-btn" onclick="goLogin()">Acceso editor →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANTALLA 2: LOGIN
+══════════════════════════════════════ -->
+<div id="s-login" class="screen">
+  <div class="lbox">
+    <div class="llogo">Hausbrot</div>
+    <div class="lsub">Editor interno · Solo uso administrativo</div>
+    <div class="lerr" id="lerr">Contraseña incorrecta. Intentá de nuevo.</div>
+    <label class="llabel">Contraseña</label>
+    <input class="linput" type="password" id="lpw" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="lbtn" onclick="doLogin()">Ingresar</button>
+    <button class="lback" onclick="goPublic()">← Volver al newsletter</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANTALLA 3: EDITOR
+══════════════════════════════════════ -->
+<div id="s-editor" class="screen">
+  <div class="eh">
+    <div style="display:flex;align-items:center">
+      <span class="elogo">Hausbrot</span>
+      <span class="emeta">· Editor</span>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="hbtn hg" onclick="goPublic()">Ver newsletter</button>
+      <button class="hbtn hg" onclick="openPreview()">Vista previa</button>
+      <button class="hbtn ha" onclick="publishNL()">Publicar →</button>
+    </div>
+  </div>
+  <div class="ebody">
+    <div class="tabs">
+      <button class="tab on" onclick="setTab('contenido',this)">Contenido</button>
+      <button class="tab" onclick="setTab('historial',this)">Historial</button>
+      <button class="tab" onclick="setTab('config',this)">Configuración</button>
+    </div>
+
+    <!-- TAB: CONTENIDO -->
+    <div id="tp-contenido" class="tp on">
+      <div class="stitle">Mes del newsletter</div>
+      <div class="ecard">
+        <div class="fr">
+          <div class="fd">
+            <label class="fl">Mes</label>
+            <select class="ei" id="cfg-mes">
+              <option>Enero</option><option>Febrero</option><option>Marzo</option><option>Abril</option>
+              <option selected>Mayo</option><option>Junio</option><option>Julio</option><option>Agosto</option>
+              <option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option>
+            </select>
+          </div>
+          <div class="fd">
+            <label class="fl">Año</label>
+            <input class="ei" type="number" id="cfg-anio" value="2025">
+          </div>
+        </div>
+        <div class="fd">
+          <label class="fl">Mensaje de introducción</label>
+          <textarea class="ei" id="cfg-intro" rows="2" placeholder="Ej: ¡Hola equipo! Estas son las novedades...">¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.</textarea>
+        </div>
+      </div>
+
+      <div class="stitle">Noticias</div>
+      <div id="nc"></div>
+      <button class="addbtn" onclick="addItem()">+ Agregar noticia</button>
+      <div style="display:flex;gap:10px;justify-content:flex-end">
+        <button class="hbtn hp" onclick="openPreview()">Vista previa</button>
+        <button class="hbtn ha" onclick="publishNL()">Publicar →</button>
+      </div>
+    </div>
+
+    <!-- TAB: HISTORIAL -->
+    <div id="tp-historial" class="tp">
+      <div class="stitle">Newsletters publicados</div>
+      <div id="ed-hist"></div>
+    </div>
+
+    <!-- TAB: CONFIG -->
+    <div id="tp-config" class="tp">
+      <div class="stitle">Cambiar contraseña</div>
+      <div class="ecard">
+        <div class="fd">
+          <label class="fl">Nueva contraseña (mínimo 4 caracteres)</label>
+          <div style="display:flex;gap:8px">
+            <input class="ei" type="password" id="npw" placeholder="Nueva contraseña" style="flex:1">
+            <button class="hbtn ha" onclick="changePw()">Guardar</button>
+          </div>
+          <p style="font-size:12px;color:var(--brown-light);margin-top:8px">
+            La contraseña se guarda en este navegador. Si abrís desde otro dispositivo, usá la contraseña original: <strong>hausbrot2025</strong>
+          </p>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <button class="hbtn hp" onclick="doLogout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PREVIEW / HIST ENTRY -->
+<div class="mover" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="mbox">
+    <div class="mhead">
+      <span class="mtitle" id="modal-title">Vista previa</span>
+      <button class="mclose" onclick="closeModal()">×</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONTRASEÑA ───────────────────────────────────────────
+// Para cambiarla permanentemente, editá este valor:
+var DEFAULT_PW = 'hausbrot2025';
+// ─────────────────────────────────────────────────────────
+
+var EMOJIS = ['🔸','🛒','🇦🇷','🎉','📣','⭐','🥐','🍞','🌟','💡','📅','🔔','✅','🎁','🏪','📦','🔥','💬','🗓️','🎯'];
+var TIPOS  = {promo:'Promoción',fecha:'Fecha especial',ops:'Operaciones',general:'General'};
+var BCLS   = {promo:'bp',fecha:'bf',ops:'bo',general:'bg'};
+var cem    = {};
+
+var DEFAULTS = {
+  mes:'Mayo', anio:2025,
+  intro:'¡Hola equipo! Estas son las novedades y acciones para este mes. Ante cualquier consulta no duden en comunicarse.',
+  news:[
+    {icon:'🛒',tipo:'promo',titulo:'Hot Sale – del 11 al 13 de mayo',texto:'Durante estos días estaremos participando del Hot Sale con acciones especiales a través de cupones de descuento.\n\nMás cerca de la fecha estaremos compartiendo el detalle de la implementación para cada sucursal.'},
+    {icon:'🇦🇷',tipo:'fecha',titulo:'25 de mayo – Tradición Hausbrot',texto:'Como todos los años, para esta fecha especial tendremos disponibles nuestros clásicos:\n\n• Pastelitos integrales y horneados (de membrillo y batata)\n\nUna propuesta que ya es parte de nuestra identidad y que acompaña a nuestros clientes en momentos de encuentro y tradición.'}
+  ]
+};
+
+// ─── STORAGE ─────────────────────────────────────────────
+var MEM = {};
+function lsGet(k){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return MEM[k]||null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} MEM[k]=v; }
+function getPublished(){ return lsGet('hb_pub') || DEFAULTS; }
+function getHistory()  { return lsGet('hb_hist') || []; }
+function getPw()       { return lsGet('hb_pw')  || DEFAULT_PW; }
+
+// ─── SCREENS ─────────────────────────────────────────────
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+}
+
+function goPublic(){
+  renderPublic();
+  show('s-public');
+}
+function goLogin(){
+  document.getElementById('lpw').value='';
+  document.getElementById('lerr').style.display='none';
+  show('s-login');
+  setTimeout(function(){ document.getElementById('lpw').focus(); },100);
+}
+function goEditor(){
+  initEditor();
+  show('s-editor');
+}
+function doLogout(){ goPublic(); }
+
+// ─── LOGIN ───────────────────────────────────────────────
+function doLogin(){
+  var pw = document.getElementById('lpw').value;
+  if(pw === getPw()){
+    document.getElementById('lerr').style.display='none';
+    goEditor();
+  } else {
+    document.getElementById('lerr').style.display='block';
+    document.getElementById('lpw').value='';
+    document.getElementById('lpw').focus();
+  }
+}
+function changePw(){
+  var v = document.getElementById('npw').value.trim();
+  if(!v || v.length < 4){ toast('Mínimo 4 caracteres'); return; }
+  lsSet('hb_pw', v);
+  document.getElementById('npw').value='';
+  toast('✓ Contraseña guardada en este navegador');
+}
+
+// ─── TABS ────────────────────────────────────────────────
+function setTab(name, btn){
+  document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('on'); });
+  document.querySelectorAll('.tp').forEach(function(p){ p.classList.remove('on'); });
+  btn.classList.add('on');
+  document.getElementById('tp-'+name).classList.add('on');
+  if(name==='historial') renderEditorHist();
+}
+
+// ─── EDITOR INIT ─────────────────────────────────────────
+function initEditor(){
+  var d = lsGet('hb_draft') || DEFAULTS;
+  document.getElementById('cfg-mes').value  = d.mes  || 'Mayo';
+  document.getElementById('cfg-anio').value = d.anio || 2025;
+  document.getElementById('cfg-intro').value= d.intro|| '';
+  renderItems(d.news || []);
+}
+
+function getState(){
+  var news=[];
+  document.querySelectorAll('.ni').forEach(function(el,i){
+    news.push({
+      icon : cem[i] || '🔸',
+      tipo : el.querySelector('.tsel').value,
+      titulo: el.querySelector('.tinp').value,
+      texto : el.querySelector('.txinp').value
+    });
+  });
+  return {
+    mes  : document.getElementById('cfg-mes').value,
+    anio : parseInt(document.getElementById('cfg-anio').value)||2025,
+    intro: document.getElementById('cfg-intro').value,
+    news : news
+  };
+}
+
+function renderItems(news){
+  document.getElementById('nc').innerHTML='';
+  cem={};
+  news.forEach(function(n,i){ addItem(n,i); });
+}
+
+function addItem(data, fi){
+  var container = document.getElementById('nc');
+  var idx = (fi!==undefined) ? fi : container.children.length;
+  var n   = data || {icon:'🔸',tipo:'general',titulo:'',texto:''};
+  cem[idx] = n.icon;
+
+  var div = document.createElement('div');
+  div.className='ni';
+
+  var picks = EMOJIS.map(function(e){
+    return '<div class="epo'+(n.icon===e?' on':'')+'" onclick="pick(this,\''+e+'\','+idx+')">'+e+'</div>';
+  }).join('');
+
+  div.innerHTML =
+    '<div class="nih"><span class="nin">NOTICIA '+(idx+1)+'</span>'
+    +'<button class="ndel" onclick="this.closest(\'.ni\').remove();reindex()" title="Eliminar">×</button></div>'
+    +'<div class="fr" style="margin-bottom:.75rem">'
+    +'<div class="fd"><label class="fl">Título</label><input class="ei tinp" type="text" value="'+esc(n.titulo)+'" placeholder="Ej: Hot Sale..."></div>'
+    +'<div class="fd"><label class="fl">Tipo</label><select class="ei tsel">'
+    +'<option value="promo"'+(n.tipo==='promo'?' selected':'')+'>Promoción</option>'
+    +'<option value="fecha"'+(n.tipo==='fecha'?' selected':'')+'>Fecha especial</option>'
+    +'<option value="ops"'+(n.tipo==='ops'?' selected':'')+'>Operaciones</option>'
+    +'<option value="general"'+(n.tipo==='general'?' selected':'')+'>General</option>'
+    +'</select></div></div>'
+    +'<div class="fd"><label class="fl">Texto</label><textarea class="ei txinp" rows="4" placeholder="Describí la novedad...">'+esc(n.texto)+'</textarea></div>'
+    +'<div class="fd"><label class="fl">Ícono</label><div class="epick">'+picks+'</div></div>';
+
+  container.appendChild(div);
+}
+
+function pick(el,emoji,idx){
+  el.closest('.epick').querySelectorAll('.epo').forEach(function(e){ e.classList.remove('on'); });
+  el.classList.add('on');
+  cem[idx]=emoji;
+}
+
+function reindex(){
+  document.querySelectorAll('.ni .nin').forEach(function(el,i){ el.textContent='NOTICIA '+(i+1); });
+}
+
+// ─── PUBLISH ─────────────────────────────────────────────
+function publishNL(){
+  var state = getState();
+  lsSet('hb_draft', state);
+  lsSet('hb_pub', state);
+
+  var hist = getHistory();
+  var key  = state.mes+' '+state.anio;
+  var idx  = hist.findIndex(function(h){ return h.key===key; });
+  var entry= Object.assign({key:key, at:new Date().toISOString()}, state);
+  if(idx>=0) hist[idx]=entry; else hist.unshift(entry);
+  lsSet('hb_hist', hist);
+
+  toast('✓ Newsletter de '+state.mes+' '+state.anio+' publicado');
+  renderPublic();
+}
+
+// ─── RENDER PUBLIC ───────────────────────────────────────
+function renderPublic(){
+  var d = getPublished();
+  document.getElementById('pub-mes').textContent = d.mes+' '+d.anio;
+  document.getElementById('pub-intro').textContent = d.intro||'';
+
+  var items = (d.news||[]).map(function(n){
+    var bc=BCLS[n.tipo]||'bg', bl=TIPOS[n.tipo]||'General';
+    return '<div class="nl-item"><div class="nl-icon">'+(n.icon||'🔸')+'</div>'
+      +'<div><span class="nl-badge '+bc+'">'+bl+'</span>'
+      +'<div class="nl-ititle">'+esc(n.titulo)+'</div>'
+      +'<div class="nl-itext">'+(n.texto||'').replace(/\n/g,'<br>')+'</div></div></div>';
+  }).join('');
+  document.getElementById('pub-items').innerHTML = items;
+
+  // historial en public
+  var hist = getHistory().filter(function(h){ return h.key!==(d.mes+' '+d.anio); });
+  var hs   = document.getElementById('pub-hist');
+  var hl   = document.getElementById('pub-hist-list');
+  if(hist.length){
+    hs.style.display='block';
+    hl.innerHTML = hist.map(function(h){
+      return '<div class="hist-row" onclick=\'showHistEntry('+JSON.stringify(h)+')\''
+        +'><span class="hm">'+h.mes+' '+h.anio+'</span>'
+        +'<span class="hc">'+(h.news||[]).length+' noticias →</span></div>';
+    }).join('');
+  } else {
+    hs.style.display='none';
+  }
+}
+
+// ─── RENDER EDITOR HIST ──────────────────────────────────
+function renderEditorHist(){
+  var hist = getHistory();
+  var c    = document.getElementById('ed-hist');
+  if(!hist.length){
+    c.innerHTML='<p style="color:var(--brown-light);font-size:14px;padding:24px 0">Todavía no publicaste ningún newsletter.</p>';
+    return;
+  }
+  c.innerHTML = hist.map(function(h){
+    return '<div class="ni" style="display:flex;align-items:center;justify-content:space-between;cursor:default">'
+      +'<div><div style="font-family:Playfair Display,serif;font-size:17px;color:var(--brown);margin-bottom:6px">'+h.mes+' '+h.anio+'</div>'
+      +'<div>'+(h.news||[]).map(function(n){ return '<span style="font-size:11px;padding:2px 8px;background:var(--white);border:1px solid var(--border);border-radius:999px;color:var(--brown-mid);margin:2px;display:inline-block">'+esc(n.titulo)+'</span>'; }).join('')+'</div></div>'
+      +'<button class="hbtn hp" onclick=\'showHistEntry('+JSON.stringify(h)+')\' style="flex-shrink:0;margin-left:12px">Ver</button></div>';
+  }).join('');
+}
+
+// ─── PREVIEW & MODAL ─────────────────────────────────────
+function openPreview(){
+  var state = getState();
+  document.getElementById('modal-title').textContent = 'Vista previa — '+state.mes+' '+state.anio;
+  document.getElementById('modal-body').innerHTML = buildNLInner(state);
+  document.getElementById('modal').classList.add('on');
+}
+
+function showHistEntry(h){
+  document.getElementById('modal-title').textContent = h.mes+' '+h.anio;
+  document.getElementById('modal-body').innerHTML = buildNLInner(h);
+  document.getElementById('modal').classList.add('on');
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('on');
+}
+
+function buildNLInner(d){
+  var items=(d.news||[]).map(function(n){
+    var bc=BCLS[n.tipo]||'bg', bl=TIPOS[n.tipo]||'General';
+    return '<div class="nl-item" style="padding:18px 24px">'
+      +'<div class="nl-icon">'+(n.icon||'🔸')+'</div>'
+      +'<div><span class="nl-badge '+bc+'">'+bl+'</span>'
+      +'<div class="nl-ititle">'+esc(n.titulo)+'</div>'
+      +'<div class="nl-itext">'+(n.texto||'').replace(/\n/g,'<br>')+'</div></div></div>';
+  }).join('');
+  return '<div class="nl-top" style="border-radius:0">'
+    +'<div class="nl-logo">Hausbrot</div>'
+    +'<div class="nl-sub">Newsletter para franquiciados</div>'
+    +'<span class="nl-pill">'+d.mes+' '+d.anio+'</span></div>'
+    +'<div style="padding:24px 24px 0"><p class="nl-intro">'+esc(d.intro)+'</p>'+items+'</div>'
+    +'<div class="nl-foot" style="border-radius:0"><div class="nl-flogo">Hausbrot</div>'
+    +'<div class="nl-ftext">Newsletter interno · Solo para franquiciados</div></div>';
+}
+
+// ─── UTILS ───────────────────────────────────────────────
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('on');
+  setTimeout(function(){ t.classList.remove('on'); },3500);
+}
+
+// ─── BOOT ────────────────────────────────────────────────
+renderPublic();
+</script>
+</body>
+</html>
