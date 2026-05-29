@@ -341,7 +341,15 @@ async function configureAPI() {
 
 // ── UTILS ────────────────────────────────────────────────────────────────────
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on')); document.getElementById(id).classList.add('on'); }
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){
+    s.classList.remove('on');
+    s.style.display = 'none';
+  });
+  var el = document.getElementById(id);
+  el.classList.add('on');
+  el.style.display = '';
+}
 function setLoading(msg){ document.getElementById('loading-msg').textContent = msg||'Cargando...'; }
 function showSync(v){ document.getElementById('sync-status').style.display = v?'flex':'none'; }
 function badge(cat){
@@ -724,9 +732,10 @@ async function deleteNL(id){
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function(){
-  // Siempre mostramos el login de inmediato con datos locales
   DB = JSON.parse(JSON.stringify(DEFAULT_DATA));
-  show('s-login');
+  // Ocultar loading screen inmediatamente y mostrar login
+  document.getElementById('s-loading').style.display = 'none';
+  document.getElementById('s-login').style.display = 'flex';
 });
 
 // Cuando el usuario hace login, cargamos los datos reales de la nube
