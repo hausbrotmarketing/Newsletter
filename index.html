@@ -210,8 +210,8 @@ textarea.ei{resize:vertical;line-height:1.5}
 // ══════════════════════════════════════════════════════════════
 // CONFIGURACIÓN — editá estas líneas con tus datos de JSONBin
 // ══════════════════════════════════════════════════════════════
-var JSONBIN_API_KEY = '';   // ← pegá tu X-Master-Key de jsonbin.io
-var JSONBIN_BIN_ID  = '';   // ← se genera automáticamente la primera vez
+var JSONBIN_API_KEY = '$2a$10$yxDQJI/22nxquqm9i7.aCeN//SAC91i9TTW.ktoiOefwZcf/AjWvm';
+var JSONBIN_BIN_ID  = '';   // se genera automáticamente la primera vez que entrás
 // ══════════════════════════════════════════════════════════════
 
 var ADMIN_PW    = 'hausbrot2025';
@@ -723,13 +723,29 @@ async function deleteNL(id){
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', async function(){
-  if(JSONBIN_API_KEY && JSONBIN_BIN_ID){
-    setLoading('Conectando con la base de datos...');
-    await dbRead();
-  }
+window.addEventListener('DOMContentLoaded', function(){
+  // Siempre mostramos el login de inmediato con datos locales
+  DB = JSON.parse(JSON.stringify(DEFAULT_DATA));
   show('s-login');
 });
+
+// Cuando el usuario hace login, cargamos los datos reales de la nube
+async function startApp() {
+  if(JSONBIN_API_KEY && JSONBIN_BIN_ID){
+    show('s-loading');
+    setLoading('Cargando datos...');
+    await dbRead();
+  }
+  document.getElementById('nav-role').textContent = role==='admin'?'Admin':'Franquiciado';
+  if(role==='admin'){ document.getElementById('editor-tab').style.display=''; }
+  if(role==='admin' && !JSONBIN_API_KEY){
+    document.getElementById('setup-banner').style.display='block';
+  } else {
+    document.getElementById('setup-banner').style.display='none';
+  }
+  renderDashboard();
+  show('s-main');
+}
 </script>
 </body>
 </html>
